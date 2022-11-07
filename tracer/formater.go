@@ -1,6 +1,7 @@
 package tracer
 
 type tracerFormater struct {
+	ID        int    `json:"id"`
 	Name      string `json:"name"`
 	City      string `json:"city"`
 	Job       string `json:"job"`
@@ -10,6 +11,7 @@ type tracerFormater struct {
 
 func singleTracerFormater(tracer Tracer) tracerFormater {
 	var tracerFormated tracerFormater
+	tracerFormated.ID = tracer.ID
 	tracerFormated.City = tracer.City
 	tracerFormated.Job = tracer.Job
 	tracerFormated.Name = tracer.Name
