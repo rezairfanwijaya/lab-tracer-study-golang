@@ -4,6 +4,10 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+	"github.com/rezairfanwijaya/lab-tracer-study-golang/coordinat"
+	"github.com/rezairfanwijaya/lab-tracer-study-golang/handler"
 	"github.com/rezairfanwijaya/lab-tracer-study-golang/helper"
 	"github.com/rezairfanwijaya/lab-tracer-study-golang/tracer"
 	"gorm.io/driver/mysql"
@@ -34,13 +38,26 @@ func main() {
 		return
 	}
 
+	// coordinate service
+	coordinateService := coordinat.NewCoordinateService()
+
 	// tracer repo
 	tracerRepo := tracer.NewTracerRepository(db)
-	val, err := tracerRepo.GetAll()
-	if err != nil {
-		log.Println(err)
-		return
+	tracerService := tracer.NewTracerService(tracerRepo, coordinateService)
+	tracerHandler := handler.NewTracerHandler(tracerService)
+
+	// router
+	router := gin.Default()
+	// enable cors
+	router.Use(cors.Default())
+
+	// endpoint
+	router.GET("/tracers", tracerHandler.GetAll)
+	router.POST("/tracer", tracerHandler.SaveTracer)
+
+	// run  server
+	if err = router.Run("localhost:9090"); err != nil {
+		log.Fatal(err)
 	}
 
-	log.Println(val)
 }
