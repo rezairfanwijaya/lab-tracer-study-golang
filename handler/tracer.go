@@ -46,5 +46,5 @@ func (h *tracerHandler) SaveTracer(c *gin.Context) {
 	}
 
 	response := helper.ResponseAPI("success", http.StatusOK, "success")
-	c.JSON(http.StatusOK, response)
+	c.JSON(http.StatusCreated, response)
 }
