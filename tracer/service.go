@@ -1,6 +1,8 @@
 package tracer
 
 import (
+	"strings"
+
 	"github.com/rezairfanwijaya/lab-tracer-study-golang/coordinat"
 )
 
@@ -37,8 +39,10 @@ func (s *tracerService) Save(tracer TracerInput) error {
 	tracerBind.Job = tracer.Job
 	tracerBind.Name = tracer.Name
 
+	city := strings.ReplaceAll(tracerBind.City, " ", "")
+
 	// get coordinate
-	coordinate, err := s.coordinateService.GetCoordinate(tracerBind.City)
+	coordinate, err := s.coordinateService.GetCoordinate(city)
 	if err != nil {
 		return err
 	}
