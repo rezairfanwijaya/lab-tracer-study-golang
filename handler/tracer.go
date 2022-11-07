@@ -40,7 +40,8 @@ func (h *tracerHandler) SaveTracer(c *gin.Context) {
 	}
 
 	if err := h.tracerService.Save(inputTracer); err != nil {
-		c.JSON(http.StatusBadRequest, err)
+		response := helper.ResponseAPI("failed", http.StatusBadRequest, err.Error())
+		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
