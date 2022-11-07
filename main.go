@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/rezairfanwijaya/lab-tracer-study-golang/helper"
+	"github.com/rezairfanwijaya/lab-tracer-study-golang/tracer"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -27,5 +28,19 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
-	log.Println("connect to database", db)
+	// migration table
+	if err = db.AutoMigrate(&tracer.Tracer{}); err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	// tracer repo
+	tracerRepo := tracer.NewTracerRepository(db)
+	val, err := tracerRepo.GetAll()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	log.Println(val)
 }
