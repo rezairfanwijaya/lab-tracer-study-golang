@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/rezairfanwijaya/lab-tracer-study-golang.git/helper"
+	"github.com/rezairfanwijaya/lab-tracer-study-golang/helper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
