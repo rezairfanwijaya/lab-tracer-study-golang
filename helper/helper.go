@@ -6,8 +6,8 @@ import (
 )
 
 type responseAPI struct {
-	Meta meta
-	Data interface{}
+	Meta meta        `json:"meta"`
+	Data interface{} `json:"data"`
 }
 
 type meta struct {
