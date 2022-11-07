@@ -20,6 +20,7 @@ func main() {
 	port := env["DATABASE_PORT"]
 	dbName := env["DATABASE_NAME"]
 
+	// open onnection
 	dsn := fmt.Sprintf("%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", username, host, port, dbName)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
