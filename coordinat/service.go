@@ -2,6 +2,7 @@ package coordinat
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -14,8 +15,9 @@ type CoordinateService interface {
 type coordinateService struct{}
 
 type coordinate struct {
-	Latitude  string `json:"latitude"`
-	Longitude string `json:"longitude"`
+	ResponseCode string `json:"responseCode"`
+	Latitude     string `json:"latitude"`
+	Longitude    string `json:"longitude"`
 }
 
 func NewCoordinateService() *coordinateService {
@@ -37,6 +39,10 @@ func (c *coordinateService) GetCoordinate(city string) (coordinate, error) {
 	var result coordinate
 	if err := json.Unmarshal(respbyte, &result); err != nil {
 		return result, err
+	}
+
+	if result.ResponseCode == "400" {
+		return coordinate{}, errors.New("city not found")
 	}
 
 	return result, nil
