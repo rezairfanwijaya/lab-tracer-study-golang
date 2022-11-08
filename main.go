@@ -54,6 +54,7 @@ func main() {
 	// endpoint
 	router.GET("/tracers", tracerHandler.GetAll)
 	router.POST("/tracer", tracerHandler.SaveTracer)
+	router.GET("/tracers/city", tracerHandler.GetAllTracerBaseCity)
 
 	// run  server
 	if err = router.Run("localhost:9090"); err != nil {
