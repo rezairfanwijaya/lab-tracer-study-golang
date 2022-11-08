@@ -8,6 +8,7 @@ import (
 
 type TracerService interface {
 	ShowAll() ([]Tracer, error)
+	ShowBaseCity() ([]TracerBaseCity, error)
 	Save(tracer TracerInput) error
 }
 
@@ -23,6 +24,7 @@ func NewTracerService(
 	return &tracerService{tracerRepo, coordinateService}
 }
 
+// show all tracer data
 func (s *tracerService) ShowAll() ([]Tracer, error) {
 	tracers, err := s.tracerRepo.GetAll()
 	if err != nil {
@@ -32,6 +34,7 @@ func (s *tracerService) ShowAll() ([]Tracer, error) {
 	return tracers, nil
 }
 
+// save new tracer data
 func (s *tracerService) Save(tracer TracerInput) error {
 	// bindcoordinat
 	var tracerBind Tracer
@@ -56,4 +59,14 @@ func (s *tracerService) Save(tracer TracerInput) error {
 	}
 
 	return nil
+}
+
+// show tracer data group by city
+func (s *tracerService) ShowBaseCity() ([]TracerBaseCity, error) {
+	tracerBaseCity, err := s.tracerRepo.GetTracerBaseCity()
+	if err != nil {
+		return tracerBaseCity, err
+	}
+
+	return tracerBaseCity, nil
 }
